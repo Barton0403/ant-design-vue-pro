@@ -188,6 +188,21 @@ export default {
             this.localPagination = false
           }
           this.localDataSource = r.data // 返回结果中的数组数据
+          // 更新选择统计
+          if (this.rowSelection) {
+            const newSelectedRowKeys = []
+            const newSelectedRows = []
+            this.selectedRowKeys.forEach((key, index) => {
+              r.list.forEach(item => {
+                if (item.id === key) {
+                  newSelectedRowKeys.push(key)
+                  newSelectedRows.push(item)
+                }
+              })
+            })
+            this.updateSelect(newSelectedRowKeys, newSelectedRows)
+            this.rowSelection.onChange(newSelectedRowKeys, newSelectedRows)
+          }
           this.localLoading = false
         })
       }
